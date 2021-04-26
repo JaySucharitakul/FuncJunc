@@ -1,4 +1,4 @@
-﻿const uri = 'api/Login';
+﻿const uri = 'fjapi/Login';
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");

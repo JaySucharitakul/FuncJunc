@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
 
-namespace FuncJuncAPI.Controllers
+namespace FuncJuncAPI.ControllersL
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -86,18 +86,6 @@ namespace FuncJuncAPI.Controllers
 
             //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> Login(LoginCredentials loginCredentials)
-        {
-            Console.WriteLine($"username: {loginCredentials.username}, password: {loginCredentials.password}");
-            if (loginCredentials.username.Equals("jay") &&
-                loginCredentials.password.Equals("123"))
-            {
-                return new Task<JsonResult>();
-            }
-            return new JsonResult("login not found");
         }
 
         // DELETE: api/TodoItems/5
