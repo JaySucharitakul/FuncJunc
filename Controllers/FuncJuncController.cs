@@ -5,23 +5,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FuncJuncAPI.Models;
+using Microsoft.Data.SqlClient;
 
 namespace FuncJuncAPI.Controllers
 {
-    [Route("fjapi/[controller]")]
+    //[Route("fjapi/[controller]")]
     [ApiController]
     public class FuncJuncController : ControllerBase
     {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        [Route("fjapi/Login")]
         [HttpPost]
-        public JsonResult Login(LoginCredentials loginCredentials)
+        public async Task<IActionResult> PostLogin(LoginCredentials loginCredentials)
         {
             Console.WriteLine($"username: {loginCredentials.username}, password: {loginCredentials.password}");
-            if (loginCredentials.username.Equals("jay") &&
-                loginCredentials.password.Equals("123"))
+           
+            con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
+            con.Open();
+            cmd = new SqlCommand("Select username,password from dbo.LoginTable where username='" 
+                + loginCredentials.username + "'and password='" + loginCredentials.password + "'", con);
+            await Task.FromResult("Done");
+            var da = new SqlDataAdapter(cmd);
+            var dt = new System.Data.DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count > 0)
             {
-                return new JsonResult("{\"result\": \"ok\"}");
+                dt.Clear();
+                da.Fill(dt);
+                con.Close();
+                return Ok();
             }
-            return new JsonResult("{\"result\": \"login not found\"}");
+            return Unauthorized();
+        }
+
+        [Route("fjapi/Test")]
+        [HttpGet]
+        public async Task<IActionResult> GetTest()
+        {
+            await Task.FromResult("Done");
+            return Ok("This is a test");
         }
     }
 }

@@ -13,32 +13,22 @@ loginButton.addEventListener("click", (e) => {
 
 
     login(username, password);
-
-//    if (username === "user" && password === "web_dev") {
-//        // If the credentials are valid, show an alert box and reload the page
-//        alert("You have successfully logged in.");
-//        location.reload();
-//    } else {
-//        // Otherwise, make the login error message show (change its oppacity)
-//        loginErrorMsg.style.opacity = 1;
-//    }
 })
 
 function login(username, password) {
     fetch(uri, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 'username': username,
                 'password': password
-            }
+            })
         })
         .then(response => {
-            var json = response.json();
-            if (true)
+            var status = response.status;
+            if (status === 200)
                 location.replace("/funcjunc.html");
             else {
                 loginErrorMsg.style.opacity = 1;
