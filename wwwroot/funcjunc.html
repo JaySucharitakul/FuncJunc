@@ -6,7 +6,12 @@
     <title>FuncJunc Functional Code Composer</title>
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
     <script src="https://unpkg.com/@blockly/dev-tools@2.0.0/dist/index.js"></script>
+    <script src="https://raw.githubusercontent.com/google/blockly/master/javascript_compressed.js"></script>
+    <script src="https://raw.githubusercontent.com/google/blockly/master/python_compressed.js"></script>
+    <script src="js/funcblocks.js"></script>
+    <script src="js/generators/JavaScript/funcblocks.js"></script>
     <script src="js/funcjunc.js"></script>
+
 
     <style>
         html,
@@ -37,19 +42,30 @@
 <body onload="start()">
     <h1>FuncJunc Functional Code Composer</h1>
     <div id="blocklyDiv"></div>
-
-    <form>
+    <!--<table style="width: 100%;">
+        <tbody>
+            <tr height="90%">
+                <td style="width: 50%;"><div id="blocklyDiv"></div></td>
+                <td style="width: 50%;"><textarea id="codearea" readonly></textarea></td>
+            </tr>
+        </tbody>
+    </table>-->
+    <!--<form>-->
         <table style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 2%"><button>Execute</button></td>
-                    <td><input type="text" id="eval_result" name="eval_result" style="width:98%;" /></td>
+                    <td style="width: 2%;"><button onclick="codeGen()">Execute</button></td>
+                    <td><input type="text" id="eval_result" name="eval_result" style="width:98%;" readonly/></td>
+                </tr>
+                <tr>
+                    <td style="width: 2%; text-align: right;">Code</td>
+                    <td><input type="text" id="gen_result" name="gen_result" style="width:98%;" readonly/></td>
                 </tr>
             </tbody>
         </table>
 
         <!--    <input type="text" id="eval_result" name="eval_result" enabled="true" style="width:85%;"/>-->
-    </form>
+    <!--</form>-->
 
     <!-- Toolbox Definition -->
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
@@ -70,6 +86,7 @@
                     </shadow>
                 </value>
             </block>
+            <!--<block type="map_operation"></block>-->
             <block type="controls_repeat" disabled="true"></block>
             <block type="controls_whileUntil"></block>
             <block type="controls_for">
@@ -350,12 +367,15 @@
         </category>
         <sep></sep>
         <category name="Variables" categorystyle="variable_category" custom="VARIABLE"></category>
-        <category name="Functions" categorystyle="procedure_category" custom="PROCEDURE"></category>
         <category name="HOFs" categorystyle="procedure_category">
-            <block type="lists_length"></block>
-            <block type="function">
-                <value name="map"></value>
-            </block>
+            <block type="map_operation"></block>
+            <block type="flatmap_operation"></block>
+            <block type="filter_operation"></block>
+            <!--<block type="lists_length"></block>
+    <block type="closure_def"></block>
+    <block type="function">
+        <value name="map"></value>
+    </block>-->
         </category>
     </xml>
 
