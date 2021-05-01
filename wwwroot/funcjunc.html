@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>FuncJunc Functional Code Composer</title>
+    <link rel="icon" type="image/x-icon" href="icon/favicon.ico">
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
     <script src="https://unpkg.com/@blockly/dev-tools@2.0.0/dist/index.js"></script>
     <script src="https://raw.githubusercontent.com/google/blockly/master/javascript_compressed.js"></script>
@@ -40,7 +41,35 @@
 </head>
 
 <body onload="start()">
-    <h1>FuncJunc Functional Code Composer</h1>
+    <table style="width: 100%">
+        <tr>
+            <td align="justify"><img src="icon/favicon-32x32.png"/></td>
+            <th align="justify">FuncJunc Functional Code Composer</th>
+            <td align="justify"><button style="margin-right:5px;" onclick="saveButton()">Save</button><button>Load</button></td>
+            <td align="right">
+                <input type="button" id="loginButton" value="Login" onclick="window.location.href='/login.html'"/>
+                <style>
+                    input[id=loginButton] {
+                        box-shadow: inset 0px 1px 0px 0px #54a3f7;
+                        background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+                        background-color: #007dc1;
+                        border-radius: 3px;
+                        border: 1px solid #124d77;
+                        display: inline-block;
+                        cursor: pointer;
+                        color: #ffffff;
+                        font-family: Arial;
+                        font-size: 12px;
+                        padding: 6px 24px;
+                        text-decoration: none;
+                        text-shadow: 0px 1px 0px #154682;
+                    }
+                </style>
+            </td>
+        </tr>
+    </table>
+
+    <!--<h1></h1>-->
     <div id="blocklyDiv"></div>
     <!--<table style="width: 100%;">
         <tbody>
