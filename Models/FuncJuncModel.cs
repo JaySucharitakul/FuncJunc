@@ -12,4 +12,9 @@ namespace FuncJuncAPI.Models
         public string email { get; set; }
     }
 
+    public class SaveLoadCredentials
+    {
+        public string email { get; set; }
+        public string xml { get; set; }
+    }
 }

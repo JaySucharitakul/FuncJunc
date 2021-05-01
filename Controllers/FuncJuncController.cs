@@ -42,20 +42,44 @@ namespace FuncJuncAPI.Controllers
             return Unauthorized();
         }
 
-        //[Route("fjapi/Save")]
-        //[HttpPost]
-        //public async Task<IActionResult> SaveToDB(LoginCredentials loginCredentials)
-        //{
-        //    con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
-        //    con.Open();
-        //    con.Open();
+        [Route("fjapi/Save")]
+        [HttpPut]
+        public async Task<IActionResult> SaveToDB(SaveLoadCredentials saveLoadCredentials)
+        {
+            con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
+            con.Open();
+            var cmd = new SqlCommand("update dbo.SaveData set savedata='" + saveLoadCredentials.xml
+                + "', datetime=GETDATE() where email='" + saveLoadCredentials.email + "'", con);
+            await Task.FromResult("Done");
+            var da = new SqlDataAdapter(cmd);
+            var dt = new DataTable();
+            da.Fill(dt);
+            return Ok();
+        }
 
-        //    var cmd = new SqlCommand("update dbo.CloudData set filedata='" + XamlWriter.Save(CanvasArea) + "', datetime=GETDATE() where username='" + Username + "'", con);
-        //    var da = new SqlDataAdapter(cmd);
-        //    var dt = new DataTable();
-        //    da.Fill(dt);
-        //    return Unauthorized();
-        //}
+        [Route("fjapi/Load")]
+        [HttpPost]
+        public async Task<IActionResult> LoadFromDB(SaveLoadCredentials saveLoadCredentials)
+        {
+            con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
+            con.Open();
+            var cmd = new SqlCommand(
+                "Select savedata from dbo.SaveData where email='" +
+                saveLoadCredentials.email + "'", con);
+            await Task.FromResult("Done");
+            var da = new SqlDataAdapter(cmd);
+            var dt = new DataTable();
+            da.Fill(dt);
+            da.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {   
+                dt.Clear();
+                da.Fill(dt);
+                con.Close();
+                return Ok();
+            }
+            return Unauthorized();
+        }
 
         [Route("fjapi/Test")]
         [HttpGet]
