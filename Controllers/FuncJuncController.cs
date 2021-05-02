@@ -46,10 +46,12 @@ namespace FuncJuncAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> SaveToDB(SaveLoadCredentials saveLoadCredentials)
         {
+            Console.WriteLine($"username: {saveLoadCredentials.username}, xml: {saveLoadCredentials.xml}");
+
             con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
             con.Open();
             var cmd = new SqlCommand("update dbo.SaveData set savedata='" + saveLoadCredentials.xml
-                + "', datetime=GETDATE() where email='" + saveLoadCredentials.email + "'", con);
+                + "', datetime=GETDATE() where username='" + saveLoadCredentials.username + "'", con);
             await Task.FromResult("Done");
             var da = new SqlDataAdapter(cmd);
             var dt = new DataTable();

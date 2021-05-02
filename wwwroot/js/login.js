@@ -11,17 +11,7 @@ loginButton.addEventListener("click", (e) => {
     const username = loginForm.username.value;
     const password = loginForm.password.value;
 
-
     login(username, password);
-
-//    if (username === "user" && password === "web_dev") {
-//        // If the credentials are valid, show an alert box and reload the page
-//        alert("You have successfully logged in.");
-//        location.reload();
-//    } else {
-//        // Otherwise, make the login error message show (change its oppacity)
-//        loginErrorMsg.style.opacity = 1;
-//    }
 })
 
 function login(username, password) {
@@ -37,8 +27,10 @@ function login(username, password) {
         })
         .then(response => {
             var status = response.status;
-            if (status == 200)
+            if (status == 200) {
+                setCookie("username", username, 1);
                 location.replace("/funcjunc.html");
+            }
             else {
                 loginErrorMsg.style.opacity = 1;
                 loginForm.username.value = "";
@@ -46,4 +38,35 @@ function login(username, password) {
             }
         })
         .catch(error => console.error('Unable to login', error));
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function checkCookie() {
+    let user = getCookie("username");
+    if (user != "") {
+        return true;
+    }
+    return false;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

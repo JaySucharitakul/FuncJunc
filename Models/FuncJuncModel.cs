@@ -14,6 +14,7 @@ namespace FuncJuncAPI.Models
 
     public class SaveLoadCredentials
     {
+        public string username { get; set; }
         public string email { get; set; }
         public string xml { get; set; }
     }
