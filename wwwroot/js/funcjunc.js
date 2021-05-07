@@ -35,6 +35,7 @@ function loginClick() {
 
 function saveButton() {
     let xml = Blockly.Xml.workspaceToDom(workspace);
+    var xml_text = Blockly.Xml.domToText(xml);
     fetch('fjapi/Save', {
         method: 'PUT',
         headers: {
@@ -42,13 +43,45 @@ function saveButton() {
         },
         body: JSON.stringify({
             'username': getCookie("username"),
-            'xml': xml
+            'email': "",
+            'xml': btoa(xml_text)
         })
     })
         .then(response => {
-            alert("saved file");
+            let status = response.status;
+            if (status == 200)
+                alert("saved file");
+            else
+                alert(response.statusText);
         })
         .catch(error => console.error('Unable to login', error));
+}
+
+function loadButton() {
+    fetch('fjapi/Load', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'username': getCookie("username"),
+            'email': ""
+        })
+    })
+        .then(response => {
+            let status = response.status;
+            if (status == 200) {
+                response.text().then(txt => {
+                    let text = atob(txt);
+                    var xml = Blockly.Xml.textToDom(text);
+                    Blockly.Xml.domToWorkspace(xml, workspace);
+                });
+                alert("loaded file");
+            }
+            else
+                alert(response.statusText);
+        })
+        .catch();
 }
 
 function setCookie(cname, cvalue, exdays) {

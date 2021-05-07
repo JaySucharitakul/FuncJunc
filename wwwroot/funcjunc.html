@@ -45,7 +45,10 @@
         <tr>
             <td align="justify"><img src="icon/favicon-32x32.png"/></td>
             <th align="justify">FuncJunc Functional Code Composer</th>
-            <td align="justify"><button style="margin-right:5px;" onclick="saveButton()">Save</button><button>Load</button></td>
+            <td align="justify">
+                <button style="margin-right:5px;" onclick="saveButton()">Save</button>
+                <button onclick="loadButton()">Load</button>
+            </td>
             <td align="right">
                 <input type="button" id="loginButton" onclick="loginClick()"/>
                 <style>
@@ -69,17 +72,7 @@
         </tr>
     </table>
 
-    <!--<h1></h1>-->
     <div id="blocklyDiv"></div>
-    <!--<table style="width: 100%;">
-        <tbody>
-            <tr height="90%">
-                <td style="width: 50%;"><div id="blocklyDiv"></div></td>
-                <td style="width: 50%;"><textarea id="codearea" readonly></textarea></td>
-            </tr>
-        </tbody>
-    </table>-->
-    <!--<form>-->
         <table style="width: 100%;">
             <tbody>
                 <tr>
@@ -92,9 +85,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!--    <input type="text" id="eval_result" name="eval_result" enabled="true" style="width:85%;"/>-->
-    <!--</form>-->
 
     <!-- Toolbox Definition -->
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
