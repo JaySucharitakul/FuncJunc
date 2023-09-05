@@ -24,7 +24,7 @@ namespace FuncJuncAPI.Controllers
         {
             Console.WriteLine($"username: {loginCredentials.username}, password: {loginCredentials.password}");
            
-            con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
+            con = new SqlConnection(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING"));
             con.Open();
             cmd = new SqlCommand("Select username,password from dbo.LoginTable where username='" 
                 + loginCredentials.username + "'and password='" + loginCredentials.password + "'", con);
@@ -49,7 +49,7 @@ namespace FuncJuncAPI.Controllers
             var xmlDecoded = Base64Decode(saveLoadCredentials.xml);
             Console.WriteLine($"username: {saveLoadCredentials.username}, xml: {xmlDecoded}");
 
-            con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
+            con = new SqlConnection(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING"));
             con.Open();
             var cmd = new SqlCommand("update dbo.SaveData set savedata='" + xmlDecoded
                 + "', datetime=GETDATE() where username='" + saveLoadCredentials.username + "'", con);
@@ -64,7 +64,7 @@ namespace FuncJuncAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadFromDB(SaveLoadCredentials saveLoadCredentials)
         {
-            con = new SqlConnection("Data Source=desktop-4j9pqo1\\jayserver;Initial Catalog=funcjunc;Integrated Security=True");
+            con = new SqlConnection(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING"));
             con.Open();
             var cmd = new SqlCommand(
                 "Select savedata from dbo.SaveData where username='" +
